@@ -1,3 +1,9 @@
 [submodule "vendor/OsmDroid"]
 	path = vendor/OsmDroid
 	url = git@github.com:illarionov/OsmDroid.git
+[submodule "jni/RTKLIB"]
+	path = jni/RTKLIB
+	url = git@github.com:yunssi/RTKLIB.git
+[submodule "jni/LAPACK"]
+	path = jni/LAPACK
+	url = git@github.com:yunssi/LAPACK.git
