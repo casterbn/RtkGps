@@ -1,12 +1,16 @@
 include $(CLEAR_VARS)
 
+# path setting for NDK
+NDK_PATH := /sdk/android-ndk-r9
+
 RTKLIB_PATH := RTKLIB
 RTKLIB_CFLAGS := -DENAGLO -DENAGAL -DENAQZS -DENACMP -DNFREQ=3 -DTRACE
 
 LOCAL_MODULE    := rtklib
 
 RTKLIB_CFLAGS += -DLAPACK
-LOCAL_STATIC_LIBRARIES += clapack blas f2c
+#LOCAL_STATIC_LIBRARIES += clapack blas f2c
+LOCAL_STATIC_LIBRARIES += lapack blas
 
 LOCAL_CFLAGS += -fvisibility=hidden
 LOCAL_CFLAGS += $(RTKLIB_CFLAGS)
@@ -15,7 +19,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(RTKLIB_PATH)/src
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/$(RTKLIB_PATH)/src
 
 LOCAL_LDLIBS += -llog
-LOCAL_EXPORT_LDLIBS += -llog
+#LOCAL_EXPORT_LDLIBS += -llog
+# add fortran library
+LOCAL_EXPORT_LDLIBS += -llog -l$(NDK_PATH)/toolchains/arm-linux-androideabi-4.8.0/prebuilt/linux-x86/arm-linux-androideabi/lib/armv7-a/libgfortran.a
 
 LOCAL_SRC_FILES := \
         $(RTKLIB_PATH)/src/convkml.c \
@@ -50,8 +56,8 @@ LOCAL_SRC_FILES := \
 
 LOCAL_SRC_FILES += \
         $(RTKLIB_PATH)/src/rcv/binex.c \
-	$(RTKLIB_PATH)/src/rcv/crescent.c \
-	$(RTKLIB_PATH)/src/rcv/gw10.c \
+        $(RTKLIB_PATH)/src/rcv/crescent.c \
+        $(RTKLIB_PATH)/src/rcv/gw10.c \
         $(RTKLIB_PATH)/src/rcv/javad.c \
         $(RTKLIB_PATH)/src/rcv/novatel.c \
         $(RTKLIB_PATH)/src/rcv/nvs.c \
@@ -64,7 +70,8 @@ LOCAL_SRC_FILES += \
 LOCAL_SRC_FILES += log.c
 
 TARGET-process-src-files-tags += $(call add-src-files-target-cflags, \
-       $(RTKLIB_PATH)/src/rtkcmn.c, -Ddgemm_=f2c_dgemm)
+       $(RTKLIB_PATH)/src/rtkcmn.c )
+#       $(RTKLIB_PATH)/src/rtkcmn.c, -Ddgemm_=f2c_dgemm)
 
 include $(BUILD_STATIC_LIBRARY)
 

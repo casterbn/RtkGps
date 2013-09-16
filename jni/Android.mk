@@ -18,7 +18,9 @@ LOCAL_SRC_FILES := \
 
 LOCAL_STATIC_LIBRARIES := rtklib
 
+LOCAL_LDLIBS += jni/LAPACK/liblapack.a jni/LAPACK/libblas.a
+
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,simonlynen_android_libs/lapack/jni)
+#$(call import-module,simonlynen_android_libs/lapack/jni)
 
