@@ -1,9 +1,13 @@
 package ru0xdc.rtkgps;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
@@ -216,6 +220,8 @@ public class MainActivity extends Activity {
             }
 
         };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     private void selectDrawerItem(int itemId) {
@@ -243,7 +249,6 @@ public class MainActivity extends Activity {
     }
 
     private void setNavDrawerItemFragment(int itemId) {
-        Fragment fragment;
         mDrawerLayout.closeDrawer(mNavDrawer);
 
         if (mNavDraverSelectedItem == itemId) {
@@ -252,15 +257,37 @@ public class MainActivity extends Activity {
 
         switch (itemId) {
         case R.id.navdraw_item_status:
-            fragment = new StatusFragment();
+            replaceFragment(new StatusFragment(), R.id.navdraw_item_status);
             break;
         case R.id.navdraw_item_map:
-            fragment = new MapFragment();
+        {
+            String[] mapTypeMenuItems = { "Open Street Map", "Daum Map"};
+
+            Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Map Select");
+            dialog.setItems(mapTypeMenuItems, new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which)
+                    {
+                        case 0: // Open Street Map
+                            replaceFragment(new MapFragment(), R.id.navdraw_item_map);
+                            break;
+                        case 1: // Daum Map
+                            replaceFragment(new DaumMapFragment(), R.id.navdraw_item_map);
+                            break;
+                    }
+                }
+            });
+            dialog.show();
+        }
             break;
         default:
             throw new IllegalArgumentException();
         }
+    }
 
+    private void replaceFragment(Fragment fragment, int itemId) {
         getFragmentManager()
         .beginTransaction()
         .replace(R.id.container, fragment)

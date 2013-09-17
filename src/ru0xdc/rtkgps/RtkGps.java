@@ -7,7 +7,7 @@ import android.app.Application;
 import android.os.StrictMode;
 
 @ReportsCrashes(formKey = "",
-    mailTo = "bug@0xdc.ru",
+    mailTo = "sgyun@vichetech.com",
     mode = ReportingInteractionMode.TOAST,
     resToastText = R.string.crash_toast_text)
 public class RtkGps extends Application {

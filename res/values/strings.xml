@@ -21,6 +21,9 @@
     <string name="menu_map_mode_osm">OpenStreetMap</string>
     <string name="menu_map_mode_bing_aerial">Bing Aerial</string>
     <string name="menu_map_mode_bing_road">Bing Road</string>
+    <string name="menu_map_mode_standard">Standard</string>
+    <string name="menu_map_mode_satellite">Satellite</string>
+    <string name="menu_map_mode_hybrid">Hybrid</string>
     <string name="local_service_started">Local service started</string>
     <string name="local_service_stopped">Local service stopped</string>
     <string name="local_service_label">RtkGps</string>
